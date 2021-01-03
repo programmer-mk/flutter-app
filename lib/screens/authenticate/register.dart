@@ -178,8 +178,7 @@ class _RegisterState extends State<Register> {
                               if (result == null) {
                                 setState(() {
                                   loading = false;
-                                  error =
-                                      'Molim vas unesite validnu email adresu';
+                                  error = 'Molim vas unesite validnu email adresu';
                                 });
                               }
                             }

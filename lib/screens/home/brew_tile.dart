@@ -1,30 +1,58 @@
 import 'package:flutter_app/models/product.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/user.dart';
+import 'package:flutter_app/screens/home/product_detail.dart';
+import 'package:flutter_app/services/database.dart';
+import 'package:provider/provider.dart';
 
 class ProductTile extends StatelessWidget {
-
   final Product product;
-  ProductTile({ this.product });
+  final bool renderDeleteButton;
+
+  ProductTile(this.product, this.renderDeleteButton);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
-      child: Card(
-        shape: StadiumBorder(
-          side: BorderSide(
-            color: Colors.black,
-            width: 0.1,
+
+    User user = Provider.of<User>(context);
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ProductDetail(
+                  product.name, product.price, product.description)),
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: Card(
+          shape: StadiumBorder(
+            side: BorderSide(
+              color: Colors.black,
+              width: 0.1,
+            ),
           ),
-        ),
-        margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
-        child: ListTile(
-          leading: CircleAvatar(
-            radius: 25.0,
-            backgroundColor: Colors.brown,
-          ),
-          title: Text(product.name),
-          subtitle: Text('Cena:  ${product.price} din'),
+          margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
+          child: ListTile(
+              leading: CircleAvatar(
+                radius: 25.0,
+                backgroundColor: Colors.brown,
+              ),
+              title: Text(product.name),
+              subtitle: Text('Cena:  ${product.price} din'),
+              trailing: ButtonTheme(
+                buttonColor: Colors.red,
+                minWidth: 50.0,
+                height: 32.0,
+                child: RaisedButton(
+                  onPressed: () {
+                    DatabaseService(uid: user.uid).deleteBucketProducts(product.name, product.price);
+                  },
+                  child: Text("Obrisi", style: TextStyle(color: Colors.white)),
+                ),
+              )),
         ),
       ),
     );

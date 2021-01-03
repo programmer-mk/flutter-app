@@ -21,11 +21,7 @@ class _BrewListState extends State<BrewList> {
           SizedBox(
             height: 20.0,
           ),
-        GestureDetector(
-          onTap: (){
-            print("Container clicked");
-          },
-          child:Container(
+        Container(
             child: Text(
               'Proizvodi',
               style: TextStyle(
@@ -35,7 +31,6 @@ class _BrewListState extends State<BrewList> {
               )
             )
            ),
-          ),
           SizedBox(
             height: 10.0,
           ),
@@ -43,7 +38,7 @@ class _BrewListState extends State<BrewList> {
             child: ListView.builder(
               itemCount: products.length,
               itemBuilder: (context, index) {
-                return ProductTile(product: products[index]);
+                return ProductTile(products[index], false);
               },
             ),
           )
