@@ -20,7 +20,7 @@ class DatabaseService {
       'lastName': lastName,
       'phone': phone,
       'address': address,
-      'type': userType,
+      'userType': userType,
     });
   }
 
@@ -31,7 +31,8 @@ class DatabaseService {
         firstName: snapshot.data['firstName'],
         lastName: snapshot.data['lastName'],
         phone: snapshot.data['phone'],
-        address: snapshot.data['address']
+        address: snapshot.data['address'],
+        userType: snapshot.data['userType']
     );
   }
 

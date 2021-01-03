@@ -4,6 +4,10 @@ import 'package:flutter_app/screens/home/brew_tile.dart';
 import 'package:provider/provider.dart';
 
 class BrewList extends StatefulWidget {
+  bool seller;
+
+  BrewList({this.seller});
+
   @override
   _BrewListState createState() => _BrewListState();
 }
@@ -11,40 +15,49 @@ class BrewList extends StatefulWidget {
 class _BrewListState extends State<BrewList> {
   @override
   Widget build(BuildContext context) {
-
     final products = Provider.of<List<Product>>(context) ?? [];
 
     return Container(
-      height: MediaQuery.of(context).size.height,
-      child: Column(
-        children: [
-          SizedBox(
-            height: 20.0,
-          ),
-        Container(
-            child: Text(
-              'Proizvodi',
-              style: TextStyle(
-                color: Colors.red[600],
-                fontWeight: FontWeight.bold,
-                fontSize: 20.0,
-              )
-            )
-           ),
-          SizedBox(
-            height: 10.0,
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: products.length,
-              itemBuilder: (context, index) {
-                return ProductTile(products[index], false);
-              },
+        height: MediaQuery.of(context).size.height,
+        child: Column(
+          children: [
+            SizedBox(
+              height: 20.0,
             ),
-          )
-        ],
-      )
-    );
+            Container(
+                child: Text('Proizvodi',
+                    style: TextStyle(
+                      color: Colors.red[600],
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20.0,
+                    ))),
+            SizedBox(
+              height: 10.0,
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: products.length,
+                itemBuilder: (context, index) {
+                  return ProductTile(products[index], false);
+                },
+              ),
+            ),
+            SizedBox(
+              height: 40.0,
+            ),
+            widget.seller
+                ? Container(
+                    child: ButtonTheme(
+                        buttonColor: Colors.red,
+                        child: RaisedButton(
+                            onPressed: () {},
+                            child: Text('Dodaj proizvod',
+                                style: TextStyle(color: Colors.white)))))
+                : SizedBox(),
+            SizedBox(
+              height: 30.0,
+            ),
+          ],
+        ));
   }
 }
-
