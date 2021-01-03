@@ -211,6 +211,8 @@ class _ChangeProfileInfoState extends State<ChangeProfileInfo> {
                                 _currentLastName ?? snapshot.data.lastName,
                                 _currentPhone ?? snapshot.data.lastName,
                                 _currentAddress ?? snapshot.data.lastName,
+                                // userType cannot be changed
+                                userData.userType
                             );
                             Navigator.pop(context);
                           }

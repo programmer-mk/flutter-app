@@ -22,6 +22,14 @@ class _RegisterState extends State<Register> {
   String phone = '';
   String address = '';
 
+  int _radioValue = -1;
+
+  void _handleRadioValueChange(int value) {
+    setState(() {
+      _radioValue = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return loading ? Loading() : Scaffold(
@@ -163,6 +171,32 @@ class _RegisterState extends State<Register> {
                         },
                       ),
                       SizedBox(height: 30.0),
+                      new Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          new Radio(
+                            value: 0,
+                            groupValue: _radioValue,
+                            onChanged: _handleRadioValueChange,
+                          ),
+                          new Text(
+                            'Kupac',
+                            style: new TextStyle(fontSize: 16.0),
+                          ),
+                          new Radio(
+                            value: 1,
+                            groupValue: _radioValue,
+                            onChanged: _handleRadioValueChange,
+                          ),
+                          new Text(
+                            'Prodavac',
+                            style: new TextStyle(
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20.0),
                       RaisedButton(
                           color: Colors.red[600],
                           child: Text(
@@ -174,7 +208,7 @@ class _RegisterState extends State<Register> {
                               setState(() => loading = true);
                               dynamic result =
                                   await _auth.registerWithEmailAndPassword(
-                                      email, password, firstName, lastName, phone, address);
+                                      email, password, firstName, lastName, phone, address, _radioValue);
                               if (result == null) {
                                 setState(() {
                                   loading = false;
