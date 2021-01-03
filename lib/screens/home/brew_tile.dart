@@ -35,24 +35,32 @@ class ProductTile extends StatelessWidget {
             ),
           ),
           margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
-          child: ListTile(
-              leading: CircleAvatar(
-                radius: 25.0,
-                backgroundColor: Colors.brown,
-              ),
-              title: Text(product.name),
-              subtitle: Text('Cena:  ${product.price} din'),
-              trailing: renderDeleteButton ? ButtonTheme(
-                buttonColor: Colors.red,
-                minWidth: 50.0,
-                height: 32.0,
-                child: RaisedButton(
-                  onPressed: () {
-                    DatabaseService(uid: user.uid).deleteBucketProducts(product.name, product.price);
-                  },
-                  child: Text("Obrisi", style: TextStyle(color: Colors.white)),
+          child: Container(
+            height: 80.0,
+            child:ListTile(
+                leading: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minWidth: 80.0,
+                    minHeight: 80.0,
+                    maxWidth: 90.0,
+                    maxHeight: 90.0,
+                  ),
+                  child: Image.network(product.imageUrl)
                 ),
-              ): SizedBox()),
+                title: Text(product.name),
+                subtitle: Text('Cena:  ${product.price} din'),
+                trailing: renderDeleteButton ? ButtonTheme(
+                  buttonColor: Colors.red,
+                  minWidth: 50.0,
+                  height: 32.0,
+                  child: RaisedButton(
+                    onPressed: () {
+                      DatabaseService(uid: user.uid).deleteBucketProducts(product.name, product.price);
+                    },
+                    child: Text("Obrisi", style: TextStyle(color: Colors.white)),
+                  ),
+                ): SizedBox()),
+          )
         ),
       ),
     );

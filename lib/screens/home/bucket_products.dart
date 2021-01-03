@@ -13,7 +13,7 @@ class _BucketProductListState extends State<BucketProductList> {
   Widget build(BuildContext context) {
 
     final products = Provider.of<List<Product>>(context) ?? [];
-    Product totalProduct = products.fold(Product('', 0, ''), (previous, current) => Product('', previous.price + current.price, ''));
+    Product totalProduct = products.fold(Product('', 0, '', '', ''), (previous, current) => Product('', previous.price + current.price, '', '', ''));
 
     return Container(
         height: MediaQuery.of(context).size.height,
