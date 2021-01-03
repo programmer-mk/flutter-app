@@ -22,7 +22,7 @@ class ProductTile extends StatelessWidget {
           context,
           MaterialPageRoute(
               builder: (context) => ProductDetail(
-                  product.name, product.price, product.description)),
+                  product.name, product.price, product.description, product.imageUrl)),
         );
       },
       child: Padding(

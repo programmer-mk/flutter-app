@@ -5,8 +5,9 @@ class ProductDetail extends StatefulWidget {
   String productName = '';
   int productPrice = 0;
   String productDescription = '';
+  String imageUrl = '';
 
-  ProductDetail(this.productName, this.productPrice, this.productDescription);
+  ProductDetail(this.productName, this.productPrice, this.productDescription, this.imageUrl);
 
   @override
   _ProductDetailState createState() => _ProductDetailState();
@@ -55,7 +56,7 @@ class _ProductDetailState extends State<ProductDetail> {
                     SizedBox(height: 25.0),
                     Container(
                         child:
-                            Image.asset('assets/images/medenjaci-welcome.png')),
+                            Image.network(widget.imageUrl)),
                     SizedBox(height: 45.0),
                     Container(
                         child: Row(
