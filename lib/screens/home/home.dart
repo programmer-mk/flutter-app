@@ -1,6 +1,6 @@
 import 'package:flutter_app/models/product.dart';
 import 'package:flutter_app/models/user.dart';
-import 'package:flutter_app/screens/home/brew_list.dart';
+import 'package:flutter_app/screens/home/product_list.dart';
 import 'package:flutter_app/screens/home/change_profile.dart';
 import 'package:flutter_app/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -64,10 +64,10 @@ class Home extends StatelessWidget {
                   UserData userData = snapshot.data;
                   if (userData.userType == 0) {
                     // buyer
-                    return BrewList(seller: false);
+                    return ProductList(seller: false);
                   } else {
                     // seller
-                    return BrewList(seller: true);
+                    return ProductList(seller: true);
                   }
                 } else {
                   return Loading();

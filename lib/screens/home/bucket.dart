@@ -1,6 +1,6 @@
 import 'package:flutter_app/models/product.dart';
 import 'package:flutter_app/models/user.dart';
-import 'package:flutter_app/screens/home/brew_list.dart';
+import 'package:flutter_app/screens/home/product_list.dart';
 import 'package:flutter_app/screens/home/bucket_products.dart';
 import 'package:flutter_app/screens/home/change_profile.dart';
 import 'package:flutter_app/services/auth.dart';

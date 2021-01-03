@@ -36,7 +36,7 @@
 //               child: Column(
 //                 children: <Widget>[
 //                   Text(
-//                     'Update your brew settings.',
+//                     'Update your product settings.',
 //                     style: TextStyle(fontSize: 18.0),
 //                   ),
 //                   SizedBox(height: 20.0),

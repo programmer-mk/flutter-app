@@ -80,8 +80,8 @@ class DatabaseService {
       return productsResult;
   }
 
-  // brew list from snapshot
-  List<Product> _brewListFromSnapshot(QuerySnapshot snapshot) {
+  // product list from snapshot
+  List<Product> _productListFromSnapshot(QuerySnapshot snapshot) {
     var products = snapshot.documents;
     return snapshot.documents.map((doc){
       //print(doc.data);
@@ -90,10 +90,10 @@ class DatabaseService {
     }).toList();
   }
 
-  // get brews stream
+  // get product stream
   Stream<List<Product>> get products {
     return productCollection.snapshots()
-        .map(_brewListFromSnapshot);
+        .map(_productListFromSnapshot);
   }
 
   Stream<List<Product>> get bucketProducts {

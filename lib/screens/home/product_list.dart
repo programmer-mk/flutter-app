@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/product.dart';
 import 'package:flutter_app/screens/home/add_product.dart';
-import 'package:flutter_app/screens/home/brew_tile.dart';
+import 'package:flutter_app/screens/home/product_tile.dart';
 import 'package:provider/provider.dart';
 
-class BrewList extends StatefulWidget {
+class ProductList extends StatefulWidget {
   bool seller;
 
-  BrewList({this.seller});
+  ProductList({this.seller});
 
   @override
-  _BrewListState createState() => _BrewListState();
+  _ProductListState createState() => _ProductListState();
 }
 
-class _BrewListState extends State<BrewList> {
+class _ProductListState extends State<ProductList> {
   @override
   Widget build(BuildContext context) {
     final products = Provider.of<List<Product>>(context) ?? [];
