@@ -42,7 +42,7 @@ class ProductTile extends StatelessWidget {
               ),
               title: Text(product.name),
               subtitle: Text('Cena:  ${product.price} din'),
-              trailing: ButtonTheme(
+              trailing: renderDeleteButton ? ButtonTheme(
                 buttonColor: Colors.red,
                 minWidth: 50.0,
                 height: 32.0,
@@ -52,7 +52,7 @@ class ProductTile extends StatelessWidget {
                   },
                   child: Text("Obrisi", style: TextStyle(color: Colors.white)),
                 ),
-              )),
+              ): SizedBox()),
         ),
       ),
     );
