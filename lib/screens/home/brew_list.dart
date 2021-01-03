@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/product.dart';
+import 'package:flutter_app/screens/home/add_product.dart';
 import 'package:flutter_app/screens/home/brew_tile.dart';
 import 'package:provider/provider.dart';
 
@@ -50,7 +51,12 @@ class _BrewListState extends State<BrewList> {
                     child: ButtonTheme(
                         buttonColor: Colors.red,
                         child: RaisedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AddProduct()));
+                            },
                             child: Text('Dodaj proizvod',
                                 style: TextStyle(color: Colors.white)))))
                 : SizedBox(),
