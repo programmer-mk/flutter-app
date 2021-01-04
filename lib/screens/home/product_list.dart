@@ -46,20 +46,49 @@ class _ProductListState extends State<ProductList> {
             SizedBox(
               height: 40.0,
             ),
-            widget.seller
-                ? Container(
-                    child: ButtonTheme(
-                        buttonColor: Colors.red,
-                        child: RaisedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => AddProduct()));
-                            },
-                            child: Text('Dodaj proizvod',
-                                style: TextStyle(color: Colors.white)))))
-                : SizedBox(),
+            Container(
+                child: Row(
+              children: [
+                widget.seller
+                    ? Expanded(
+                        child: Padding(
+                            padding: EdgeInsets.only(left: 35.0, right: 35.0),
+                            child: Container(
+                                child: ButtonTheme(
+                                    buttonColor: Colors.red,
+                                    child: RaisedButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      AddProduct()));
+                                        },
+                                        child: Text('Dodaj proizvod',
+                                            style: TextStyle(
+                                                color: Colors.white)))))))
+                    : SizedBox(),
+                widget.seller
+                    ? Expanded(
+                        child: Padding(
+                            padding: EdgeInsets.only(left: 35.0, right: 35.0),
+                            child: Container(
+                                child: ButtonTheme(
+                                    buttonColor: Colors.red,
+                                    child: RaisedButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      AddProduct()));
+                                        },
+                                        child: Text('Porudzbine',
+                                            style: TextStyle(
+                                                color: Colors.white)))))))
+                    : SizedBox(),
+              ],
+            )),
             SizedBox(
               height: 30.0,
             ),
