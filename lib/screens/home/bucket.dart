@@ -74,7 +74,7 @@ class _BucketState extends State<Bucket> {
             ),
           ],
         ),
-        body: BucketProductList(),
+        body: BucketProductList(user: user),
       ),
     );
   }

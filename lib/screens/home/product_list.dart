@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/product.dart';
 import 'package:flutter_app/screens/home/add_product.dart';
+import 'package:flutter_app/screens/home/orders.dart';
 import 'package:flutter_app/screens/home/product_tile.dart';
 import 'package:provider/provider.dart';
 
@@ -81,7 +82,7 @@ class _ProductListState extends State<ProductList> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      AddProduct()));
+                                                      Orders()));
                                         },
                                         child: Text('Porudzbine',
                                             style: TextStyle(

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_app/models/order.dart';
 import 'package:flutter_app/models/product.dart';
 import 'package:flutter_app/models/user.dart';
 import 'package:uuid/uuid.dart';
@@ -16,6 +17,7 @@ class DatabaseService {
   final CollectionReference productCollection = Firestore.instance.collection('products');
   final CollectionReference bucketCollection = Firestore.instance.collection('bucket');
   final CollectionReference userCollection = Firestore.instance.collection('users');
+  final CollectionReference orderCollection = Firestore.instance.collection('orders');
   final DocumentReference images = Firestore.instance.collection('images').document();
 
   Future<void> updateUserData(String firstName, String lastName, String phone, String address, int userType) async {
@@ -25,6 +27,26 @@ class DatabaseService {
       'phone': phone,
       'address': address,
       'userType': userType,
+    });
+  }
+
+  Future<void> updateOrder(String firstName, List<dynamic> products) async {
+
+    List<Map<dynamic, dynamic>> parsedProducts = [];
+    products.forEach((product) {
+      Map mapProduct = new Map();
+      mapProduct['name'] =  product.name;
+      mapProduct['price'] =  product.price;
+      mapProduct['description'] =  product.description;
+      mapProduct['usage'] =  product.usage;
+      mapProduct['imageUrl'] =  product.imageUrl;
+      parsedProducts.add(mapProduct) ;
+    });
+
+    await orderCollection.document(uid).setData({
+      'buyerName': firstName,
+      'id': uid,
+      'products': parsedProducts
     });
   }
 
@@ -84,16 +106,32 @@ class DatabaseService {
   List<Product> _productListFromSnapshot(QuerySnapshot snapshot) {
     var products = snapshot.documents;
     return snapshot.documents.map((doc){
-      //print(doc.data);
       return Product(doc.data['name'] ?? '', doc.data['price'] ?? '', doc.data['description'] ?? '',
           doc.data['usage'] ?? '', doc.data['imageUrl'] ?? '');
     }).toList();
+  }
+
+
+  List<Order> _orderListFromSnapshot(QuerySnapshot snapshot) {
+    List<Order> list = snapshot.documents.map((doc){
+      List<Product> products = List<Product>.from(doc.data["products"].map((product) {
+        return new Product(product['name'] ?? '', product['price'] ?? '', product['description'] ?? '',
+            product['usage'] ?? '', '');
+      }));
+      return Order(doc.data['id'] ?? '', doc.data['buyerName'] ?? '', products ?? List<Product>.empty());
+    }).toList();
+      return list;
   }
 
   // get product stream
   Stream<List<Product>> get products {
     return productCollection.snapshots()
         .map(_productListFromSnapshot);
+  }
+
+  Stream<List<Order>> get orders {
+    return orderCollection.snapshots()
+        .map(_orderListFromSnapshot);
   }
 
   Stream<List<Product>> get bucketProducts {
@@ -122,6 +160,15 @@ class DatabaseService {
     bucketCollection.document(uid).setData({
       'bucketProducts': filteredResult,
     });
+  }
+
+  Future<void> deleteOrder(String id)  async {
+    await orderCollection.document(id).delete();
+  }
+
+  Future<void> proceedOrder(String id)  async {
+    // mock proceed for now
+    await orderCollection.document(id).delete();
   }
 
   // get user doc stream

@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/product.dart';
+import 'package:flutter_app/models/user.dart';
 import 'package:flutter_app/screens/home/product_tile.dart';
+import 'package:flutter_app/services/database.dart';
 import 'package:provider/provider.dart';
 
 class BucketProductList extends StatefulWidget {
+
+  User user;
+  BucketProductList({this.user});
+
   @override
   _BucketProductListState createState() => _BucketProductListState();
 }
@@ -87,8 +93,9 @@ class _BucketProductListState extends State<BucketProductList> {
             Container(
               child: RaisedButton(
                 color: Colors.red,
-                onPressed: () {
-
+                onPressed: ()  {
+                  DatabaseService(uid: widget.user.uid).updateOrder('Milojko',products);
+                  Navigator.pop(context);
                 },
                 child: Text(
                     'Kupi',
