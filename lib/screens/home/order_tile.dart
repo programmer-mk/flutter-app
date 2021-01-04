@@ -1,8 +1,6 @@
 import 'package:flutter_app/models/order.dart';
-import 'package:flutter_app/models/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user.dart';
-import 'package:flutter_app/screens/home/product_detail.dart';
 import 'package:flutter_app/services/database.dart';
 import 'package:provider/provider.dart';
 
@@ -49,7 +47,14 @@ class OrderTile extends StatelessWidget {
                       title: Text('ime kupca: ${order.buyerName}', style: TextStyle(fontSize: 12.0)),
                       subtitle: RaisedButton( child: Text('Proizvodi   '),
                         onPressed: () {
-
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text('Proizvodi'),
+                                  content: setupAlertDialoadContainer(),
+                                );
+                              });
                         },
                       ),
                       trailing: Container(
@@ -92,6 +97,24 @@ class OrderTile extends StatelessWidget {
                         ],
                       ))))),
         ),
+      ),
+    );
+  }
+
+  Widget setupAlertDialoadContainer() {
+    return Container(
+      height: 200.0, // Change as per your requirement
+      width: 200.0, // Change as per your requirement
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: order.products.length,
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+            leading: Text('${index+1} )'),
+            title: Text(order.products[index].name),
+            trailing: Text('${order.products[index].price}  din'),
+          );
+        },
       ),
     );
   }
