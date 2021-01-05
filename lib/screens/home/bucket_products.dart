@@ -93,7 +93,7 @@ class _BucketProductListState extends State<BucketProductList> {
             Container(
               child: RaisedButton(
                 color: Colors.red,
-                onPressed: ()  {
+                onPressed: products.isEmpty  ? null : ()  {
                   DatabaseService(uid: widget.user.uid).updateOrder(products);
                   DatabaseService(uid: widget.user.uid).deleteBucket();
                   //Navigator.pop(context);
