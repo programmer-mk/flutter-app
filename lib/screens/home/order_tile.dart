@@ -42,7 +42,7 @@ class OrderTile extends StatelessWidget {
                           ),
 
                       child: Center(
-                        child:Text('id: ${order.id}'),)
+                        child:Text('id: ${order.id.substring(0, 5)}'),)
                       ),
                       title: Text('ime kupca: ${order.buyerName}', style: TextStyle(fontSize: 12.0)),
                       subtitle: RaisedButton( child: Text('Proizvodi   '),
