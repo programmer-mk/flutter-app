@@ -30,7 +30,10 @@ class DatabaseService {
     });
   }
 
-  Future<void> updateOrder(String firstName, List<dynamic> products) async {
+  Future<void> updateOrder(List<dynamic> products) async {
+
+    DocumentSnapshot snapshot = await userCollection.document(uid).snapshots().first;
+    String firstName = snapshot.data['firstName'];
 
     List<Map<dynamic, dynamic>> parsedProducts = [];
     products.forEach((product) {
@@ -152,11 +155,40 @@ class DatabaseService {
     return productsResult;
   }
 
+  List<dynamic> _addProductToBucket(DocumentSnapshot snapshot,String productName, int productPrice,
+      String description, String usage, String imageUrl) {
+    List<dynamic> productsResult = [];
+    if(snapshot.data != null) {
+      List<dynamic> bucketProducts = snapshot.data['bucketProducts'];
+      for (var i=0; i<bucketProducts.length; i++) {
+        productsResult.add(bucketProducts[i]);
+      }
+    }
+
+    dynamic newProduct = {
+      'name': productName,
+      'price': productPrice,
+      'description': description,
+      'usage': usage,
+      'imageUrl': imageUrl
+    };
+    productsResult.add(newProduct);
+    return productsResult;
+  }
+
   Future<void> deleteBucketProducts(String productName, int productPrice)  async {
     // TODO: create unique product uuid, for now primary key of product is identifed by (productName + productPrice)
 
     DocumentSnapshot data = await bucketCollection.document(uid).snapshots().first;
     var filteredResult = _filterBucketProductListFromSnapshot(data, productName, productPrice);
+    bucketCollection.document(uid).setData({
+      'bucketProducts': filteredResult,
+    });
+  }
+
+  Future<void> addProductToBucket(String productName, int productPrice, String description, String usage, String imageUrl)  async {
+    DocumentSnapshot data = await bucketCollection.document(uid).snapshots().first;
+    var filteredResult = _addProductToBucket(data, productName, productPrice, description, usage, imageUrl);
     bucketCollection.document(uid).setData({
       'bucketProducts': filteredResult,
     });

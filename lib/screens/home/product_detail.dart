@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/screens/home/bucket.dart';
+import 'package:flutter_app/services/database.dart';
 
 class ProductDetail extends StatefulWidget {
   String productName = '';
   int productPrice = 0;
   String productDescription = '';
   String imageUrl = '';
+  String uid = '';
 
-  ProductDetail(this.productName, this.productPrice, this.productDescription, this.imageUrl);
+  ProductDetail(this.uid, this.productName, this.productPrice, this.productDescription, this.imageUrl);
 
   @override
   _ProductDetailState createState() => _ProductDetailState();
@@ -192,6 +194,8 @@ class _ProductDetailState extends State<ProductDetail> {
                           /*
                            save product to bucket
                           */
+                          DatabaseService(uid: widget.uid).addProductToBucket(widget.productName, widget.productPrice,
+                              widget.productDescription, '', widget.imageUrl);
                           Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => Bucket()),

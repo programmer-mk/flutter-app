@@ -94,7 +94,7 @@ class _BucketProductListState extends State<BucketProductList> {
               child: RaisedButton(
                 color: Colors.red,
                 onPressed: ()  {
-                  DatabaseService(uid: widget.user.uid).updateOrder('Milojko',products);
+                  DatabaseService(uid: widget.user.uid).updateOrder(products);
                   Navigator.pop(context);
                 },
                 child: Text(
