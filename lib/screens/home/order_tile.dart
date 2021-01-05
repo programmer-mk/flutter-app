@@ -102,20 +102,51 @@ class OrderTile extends StatelessWidget {
   }
 
   Widget setupAlertDialoadContainer() {
-    return Container(
-      height: 200.0, // Change as per your requirement
+    return Container(// Change as per your requirement
       width: 200.0, // Change as per your requirement
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: order.products.length,
-        itemBuilder: (BuildContext context, int index) {
-          return ListTile(
-            leading: Text('${index+1} )'),
-            title: Text(order.products[index].name),
-            trailing: Text('${order.products[index].price}  din'),
-          );
-        },
-      ),
+      child: Container(
+        child: FractionallySizedBox(
+        heightFactor: 0.5,
+        child:Column(
+          children: [
+            Container(
+              child:ListView.builder(
+                shrinkWrap: true,
+                itemCount: order.products.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(
+                    leading: Text(
+                        '${index+1} )',
+                        style: TextStyle(fontSize: 14.0)
+                    ),
+                    title: Text(order.products[index].name,
+                        style: TextStyle(fontSize: 14.0)),
+                    trailing: Text('${order.products[index].price}  din',
+                        style: TextStyle(fontSize: 14.0)),
+                  );
+                },
+              ),
+
+            ),
+            SizedBox(
+             height: 50.0,
+            ),
+            Container(
+              child: Row(
+                children: [
+                  Expanded(child: Text('Ukupna cena : ')),
+                  Expanded(child:SizedBox()),
+                //Product totalProduct = products.fold(Product('', 0, '', '', ''), (previous, current) => Product('', previous.price + current.price, '', '', ''));
+                  Expanded(child: Text('${order.products.map((x) => x.price).fold(0, (previous, current) => previous + current)} din ',
+                  style: TextStyle(color: Colors.red),)
+                  )
+                ],
+              )
+            )
+          ],
+        )
+        ),
+      )
     );
   }
 }
