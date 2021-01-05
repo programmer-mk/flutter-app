@@ -97,10 +97,12 @@ class DatabaseService {
 
   List<Product> _bucketProductListFromSnapshot(DocumentSnapshot snapshot) {
       List<Product> productsResult = [];
-      List<dynamic> bucketProducts = snapshot.data['bucketProducts'];
-      for (var i=0; i<bucketProducts.length; i++) {
-        productsResult.add(Product(bucketProducts[i]['name'], bucketProducts[i]['price'],
-            bucketProducts[i]['description'], bucketProducts[i]['usage'], bucketProducts[i]['imageUrl']));
+      if(snapshot.data != null) {
+        List<dynamic> bucketProducts = snapshot.data['bucketProducts'];
+        for (var i=0; i<bucketProducts.length; i++) {
+          productsResult.add(Product(bucketProducts[i]['name'], bucketProducts[i]['price'],
+              bucketProducts[i]['description'], bucketProducts[i]['usage'], bucketProducts[i]['imageUrl']));
+        }
       }
       return productsResult;
   }
@@ -196,6 +198,10 @@ class DatabaseService {
 
   Future<void> deleteOrder(String id)  async {
     await orderCollection.document(id).delete();
+  }
+
+  Future<void> deleteBucket()  async {
+    await bucketCollection.document(uid).delete();
   }
 
   Future<void> proceedOrder(String id)  async {
