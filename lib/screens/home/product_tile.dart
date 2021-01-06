@@ -47,7 +47,12 @@ class ProductTile extends StatelessWidget {
                   ),
                   child: Image.network(product.imageUrl)
                 ),
-                title: Text(product.name),
+                title: Container(
+                    child: Row(children: [
+                      Container(child:Text('${product.amount} X ')),
+                      Container(child:Text(product.name))
+                    ],)
+                ),
                 subtitle: Text('Cena:  ${product.price} din'),
                 trailing: renderDeleteButton ? ButtonTheme(
                   buttonColor: Colors.red,

@@ -43,6 +43,7 @@ class DatabaseService {
       mapProduct['description'] =  product.description;
       mapProduct['usage'] =  product.usage;
       mapProduct['imageUrl'] =  product.imageUrl;
+      mapProduct['amount'] =  product.amount;
       parsedProducts.add(mapProduct) ;
     });
 
@@ -91,7 +92,8 @@ class DatabaseService {
       'price': price,
       'description': description,
       'usage': usage,
-      'imageUrl': imageUrl
+      'imageUrl': imageUrl,
+      'amount': 1
     });
   }
 
@@ -101,7 +103,7 @@ class DatabaseService {
         List<dynamic> bucketProducts = snapshot.data['bucketProducts'];
         for (var i=0; i<bucketProducts.length; i++) {
           productsResult.add(Product(bucketProducts[i]['name'], bucketProducts[i]['price'],
-              bucketProducts[i]['description'], bucketProducts[i]['usage'], bucketProducts[i]['imageUrl']));
+              bucketProducts[i]['description'], bucketProducts[i]['usage'], bucketProducts[i]['imageUrl'],  bucketProducts[i]['amount']));
         }
       }
       return productsResult;
@@ -112,7 +114,7 @@ class DatabaseService {
     var products = snapshot.documents;
     return snapshot.documents.map((doc){
       return Product(doc.data['name'] ?? '', doc.data['price'] ?? '', doc.data['description'] ?? '',
-          doc.data['usage'] ?? '', doc.data['imageUrl'] ?? '');
+          doc.data['usage'] ?? '', doc.data['imageUrl'] ?? '', doc.data['amount']);
     }).toList();
   }
 
@@ -121,7 +123,7 @@ class DatabaseService {
     List<Order> list = snapshot.documents.map((doc){
       List<Product> products = List<Product>.from(doc.data["products"].map((product) {
         return new Product(product['name'] ?? '', product['price'] ?? '', product['description'] ?? '',
-            product['usage'] ?? '', '');
+            product['usage'] ?? '', '', product['amount']);
       }));
       return Order(doc.data['id'] ?? '', doc.data['buyerName'] ?? '', products ?? List<Product>.empty());
     }).toList();
@@ -158,7 +160,7 @@ class DatabaseService {
   }
 
   List<dynamic> _addProductToBucket(DocumentSnapshot snapshot,String productName, int productPrice,
-      String description, String usage, String imageUrl) {
+      String description, String usage, String imageUrl, int amount) {
     List<dynamic> productsResult = [];
     if(snapshot.data != null) {
       List<dynamic> bucketProducts = snapshot.data['bucketProducts'];
@@ -172,7 +174,8 @@ class DatabaseService {
       'price': productPrice,
       'description': description,
       'usage': usage,
-      'imageUrl': imageUrl
+      'imageUrl': imageUrl,
+      'amount': amount
     };
     productsResult.add(newProduct);
     return productsResult;
@@ -188,9 +191,9 @@ class DatabaseService {
     });
   }
 
-  Future<void> addProductToBucket(String productName, int productPrice, String description, String usage, String imageUrl)  async {
+  Future<void> addProductToBucket(String productName, int productPrice, String description, String usage, String imageUrl, int amount)  async {
     DocumentSnapshot data = await bucketCollection.document(uid).snapshots().first;
-    var filteredResult = _addProductToBucket(data, productName, productPrice, description, usage, imageUrl);
+    var filteredResult = _addProductToBucket(data, productName, productPrice, description, usage, imageUrl, amount);
     bucketCollection.document(uid).setData({
       'bucketProducts': filteredResult,
     });

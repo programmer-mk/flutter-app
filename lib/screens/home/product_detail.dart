@@ -195,10 +195,10 @@ class _ProductDetailState extends State<ProductDetail> {
                            save product to bucket
                           */
                           DatabaseService(uid: widget.uid).addProductToBucket(widget.productName, widget.productPrice,
-                              widget.productDescription, '', widget.imageUrl);
+                              widget.productDescription, '', widget.imageUrl, currentProductAmount);
                           Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => Bucket()),
+                          MaterialPageRoute(builder: (context) => Bucket())
                            );
                         },
                         style: ElevatedButton.styleFrom(

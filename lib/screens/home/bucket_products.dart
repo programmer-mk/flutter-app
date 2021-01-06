@@ -19,7 +19,8 @@ class _BucketProductListState extends State<BucketProductList> {
   Widget build(BuildContext context) {
 
     final products = Provider.of<List<Product>>(context) ?? [];
-    Product totalProduct = products.fold(Product('', 0, '', '', ''), (previous, current) => Product('', previous.price + current.price, '', '', ''));
+
+    int totalProductPrice = products.fold(0,(previous, current) => previous + current.amount * current.price);
 
     return Container(
         height: MediaQuery.of(context).size.height,
@@ -74,7 +75,7 @@ class _BucketProductListState extends State<BucketProductList> {
                       Expanded(
                         child: Center(
                           child: Text(
-                              '${totalProduct.price} din',
+                              '${totalProductPrice} din',
                               style: TextStyle(
                                 color: Colors.red[600],
                                 fontWeight: FontWeight.bold,
@@ -94,8 +95,8 @@ class _BucketProductListState extends State<BucketProductList> {
               child: RaisedButton(
                 color: Colors.red,
                 onPressed: products.isEmpty  ? null : ()  {
-                  DatabaseService(uid: widget.user.uid).updateOrder(products);
-                  DatabaseService(uid: widget.user.uid).deleteBucket();
+                  DatabaseService(uid: widget.user.uid).updateOrder(products)
+                      .then((value) => DatabaseService(uid: widget.user.uid).deleteBucket());
                   //Navigator.pop(context);
                 },
                 child: Text(

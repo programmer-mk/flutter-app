@@ -119,7 +119,7 @@ class OrderTile extends StatelessWidget {
                         '${index+1} )',
                         style: TextStyle(fontSize: 14.0)
                     ),
-                    title: Text(order.products[index].name,
+                    title: Text('${order.products[index].amount}  X  ${order.products[index].name}',
                         style: TextStyle(fontSize: 14.0)),
                     trailing: Text('${order.products[index].price}  din',
                         style: TextStyle(fontSize: 14.0)),
@@ -137,7 +137,7 @@ class OrderTile extends StatelessWidget {
                   Expanded(child: Text('Ukupna cena : ')),
                   Expanded(child:SizedBox()),
                 //Product totalProduct = products.fold(Product('', 0, '', '', ''), (previous, current) => Product('', previous.price + current.price, '', '', ''));
-                  Expanded(child: Text('${order.products.map((x) => x.price).fold(0, (previous, current) => previous + current)} din ',
+                  Expanded(child: Text('${order.products.map((x) => x.price * x.amount).fold(0, (previous, current) => previous + current)} din ',
                   style: TextStyle(color: Colors.red),)
                   )
                 ],
