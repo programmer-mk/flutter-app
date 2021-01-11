@@ -52,174 +52,199 @@ class _ChangeProfileInfoState extends State<ChangeProfileInfo> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               UserData userData = snapshot.data;
-              return Form(
-                key: _formKey,
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(height: 20.0),
-                    Text(
-                      'Izmeni licne podatke',
-                      style: TextStyle(
-                        fontSize: 22.0,
-                        color: Colors.red,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 20.0),
-                    Container(
-                      child: Row(
-                        children: [
-                          Container(
-                              width: MediaQuery.of(context).size.width / 4,
-                              child: Center(
-                                  child: Text('Ime : ',
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontWeight: FontWeight.bold,
-                                      )))),
-                          Expanded(
-                            child: TextFormField(
-                              initialValue: userData.firstName,
-                              decoration: InputDecoration(
-                                fillColor: Colors.white,
-                                border: OutlineInputBorder(
-                                  borderRadius: new BorderRadius.circular(10.0),
-                                  borderSide: new BorderSide(),
-                                ),
-                              ),
-                              validator: (val) =>
-                                  val.isEmpty ? 'Molimo vas unesite vase ime' : null,
-                              onChanged: (val) =>
-                                  setState(() => _currentFirstName = val),
+              return SingleChildScrollView(
+                  child: Column(children: <Widget>[
+                Container(
+                    height: MediaQuery.of(context).size.height,
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(height: 20.0),
+                          Text(
+                            'Izmeni licne podatke',
+                            style: TextStyle(
+                              fontSize: 22.0,
+                              color: Colors.red,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
+                          SizedBox(height: 20.0),
                           Container(
-                              width: MediaQuery.of(context).size.width / 10)
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 20.0),
-                    Container(
-                      child: Row(
-                        children: [
-                          Container(
-                              width: MediaQuery.of(context).size.width / 4,
-                              child: Center(
-                                  child: Text('Prezime : ',
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontWeight: FontWeight.bold,
-                                      )))),
-                          Expanded(
-                            child: TextFormField(
-                              initialValue: userData.lastName,
-                              decoration: InputDecoration(
-                                fillColor: Colors.white,
-                                border: OutlineInputBorder(
-                                  borderRadius: new BorderRadius.circular(10.0),
-                                  borderSide: new BorderSide(),
+                            child: Row(
+                              children: [
+                                Container(
+                                    width:
+                                        MediaQuery.of(context).size.width / 4,
+                                    child: Center(
+                                        child: Text('Ime : ',
+                                            style: TextStyle(
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.bold,
+                                            )))),
+                                Expanded(
+                                  child: TextFormField(
+                                    initialValue: userData.firstName,
+                                    decoration: InputDecoration(
+                                      fillColor: Colors.white,
+                                      border: OutlineInputBorder(
+                                        borderRadius:
+                                            new BorderRadius.circular(10.0),
+                                        borderSide: new BorderSide(),
+                                      ),
+                                    ),
+                                    validator: (val) => val.isEmpty
+                                        ? 'Molimo vas unesite vase ime'
+                                        : null,
+                                    onChanged: (val) =>
+                                        setState(() => _currentFirstName = val),
+                                  ),
                                 ),
-                              ),
-                              validator: (val) =>
-                                  val.isEmpty ? 'Molimo vas unesite vase prezime' : null,
-                              onChanged: (val) =>
-                                  setState(() => _currentLastName = val),
+                                Container(
+                                    width:
+                                        MediaQuery.of(context).size.width / 10)
+                              ],
                             ),
                           ),
+                          SizedBox(height: 20.0),
                           Container(
-                              width: MediaQuery.of(context).size.width / 10)
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 20.0),
-                    Container(
-                      child: Row(
-                        children: [
-                          Container(
-                              width: MediaQuery.of(context).size.width / 4,
-                              child: Center(
-                                  child: Text('Telefon : ',
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontWeight: FontWeight.bold,
-                                      )))),
-                          Expanded(
-                            child: TextFormField(
-                              initialValue: userData.phone,
-                              decoration: InputDecoration(
-                                fillColor: Colors.white,
-                                border: OutlineInputBorder(
-                                  borderRadius: new BorderRadius.circular(10.0),
-                                  borderSide: new BorderSide(),
+                            child: Row(
+                              children: [
+                                Container(
+                                    width:
+                                        MediaQuery.of(context).size.width / 4,
+                                    child: Center(
+                                        child: Text('Prezime : ',
+                                            style: TextStyle(
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.bold,
+                                            )))),
+                                Expanded(
+                                  child: TextFormField(
+                                    initialValue: userData.lastName,
+                                    decoration: InputDecoration(
+                                      fillColor: Colors.white,
+                                      border: OutlineInputBorder(
+                                        borderRadius:
+                                            new BorderRadius.circular(10.0),
+                                        borderSide: new BorderSide(),
+                                      ),
+                                    ),
+                                    validator: (val) => val.isEmpty
+                                        ? 'Molimo vas unesite vase prezime'
+                                        : null,
+                                    onChanged: (val) =>
+                                        setState(() => _currentLastName = val),
+                                  ),
                                 ),
-                              ),
-                              validator: (val) =>
-                                  val.isEmpty ? 'Molimo vas unesite vas telefon' : null,
-                              onChanged: (val) =>
-                                  setState(() => _currentPhone = val),
+                                Container(
+                                    width:
+                                        MediaQuery.of(context).size.width / 10)
+                              ],
                             ),
                           ),
+                          SizedBox(height: 20.0),
                           Container(
-                              width: MediaQuery.of(context).size.width / 10)
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 20.0),
-                    Container(
-                      child: Row(
-                        children: [
-                          Container(
-                              width: MediaQuery.of(context).size.width / 4,
-                              child: Center(
-                                  child: Text('Adresa : ',
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontWeight: FontWeight.bold,
-                                      )))),
-                          Expanded(
-                            child: TextFormField(
-                              initialValue: userData.address,
-                              decoration: InputDecoration(
-                                fillColor: Colors.white,
-                                border: OutlineInputBorder(
-                                  borderRadius: new BorderRadius.circular(10.0),
-                                  borderSide: new BorderSide(),
+                            child: Row(
+                              children: [
+                                Container(
+                                    width:
+                                        MediaQuery.of(context).size.width / 4,
+                                    child: Center(
+                                        child: Text('Telefon : ',
+                                            style: TextStyle(
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.bold,
+                                            )))),
+                                Expanded(
+                                  child: TextFormField(
+                                    initialValue: userData.phone,
+                                    decoration: InputDecoration(
+                                      fillColor: Colors.white,
+                                      border: OutlineInputBorder(
+                                        borderRadius:
+                                            new BorderRadius.circular(10.0),
+                                        borderSide: new BorderSide(),
+                                      ),
+                                    ),
+                                    validator: (val) => val.isEmpty
+                                        ? 'Molimo vas unesite vas telefon'
+                                        : null,
+                                    onChanged: (val) =>
+                                        setState(() => _currentPhone = val),
+                                  ),
                                 ),
-                              ),
-                              validator: (val) =>
-                                  val.isEmpty ? 'Molimo vas unesite vasu adresu' : null,
-                              onChanged: (val) =>
-                                  setState(() => _currentAddress = val),
+                                Container(
+                                    width:
+                                        MediaQuery.of(context).size.width / 10)
+                              ],
                             ),
                           ),
+                          SizedBox(height: 20.0),
                           Container(
-                              width: MediaQuery.of(context).size.width / 10)
+                            child: Row(
+                              children: [
+                                Container(
+                                    width:
+                                        MediaQuery.of(context).size.width / 4,
+                                    child: Center(
+                                        child: Text('Adresa : ',
+                                            style: TextStyle(
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.bold,
+                                            )))),
+                                Expanded(
+                                  child: TextFormField(
+                                    initialValue: userData.address,
+                                    decoration: InputDecoration(
+                                      fillColor: Colors.white,
+                                      border: OutlineInputBorder(
+                                        borderRadius:
+                                            new BorderRadius.circular(10.0),
+                                        borderSide: new BorderSide(),
+                                      ),
+                                    ),
+                                    validator: (val) => val.isEmpty
+                                        ? 'Molimo vas unesite vasu adresu'
+                                        : null,
+                                    onChanged: (val) =>
+                                        setState(() => _currentAddress = val),
+                                  ),
+                                ),
+                                Container(
+                                    width:
+                                        MediaQuery.of(context).size.width / 10)
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 35.0),
+                          RaisedButton(
+                              color: Colors.red[600],
+                              child: Text(
+                                'Sacuvaj',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onPressed: () async {
+                                if (_formKey.currentState.validate()) {
+                                  await DatabaseService(uid: user.uid)
+                                      .updateUserData(
+                                          _currentFirstName ??
+                                              snapshot.data.firstName,
+                                          _currentLastName ??
+                                              snapshot.data.lastName,
+                                          _currentPhone ??
+                                              snapshot.data.phone,
+                                          _currentAddress ??
+                                              snapshot.data.address,
+                                          // userType cannot be changed
+                                          userData.userType);
+                                  Navigator.pop(context);
+                                }
+                              }),
                         ],
                       ),
-                    ),
-                    SizedBox(height: 35.0),
-                    RaisedButton(
-                        color: Colors.red[600],
-                        child: Text(
-                          'Sacuvaj',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        onPressed: () async {
-                          if (_formKey.currentState.validate()) {
-                            await DatabaseService(uid: user.uid).updateUserData(
-                                _currentFirstName ?? snapshot.data.firstName,
-                                _currentLastName ?? snapshot.data.lastName,
-                                _currentPhone ?? snapshot.data.lastName,
-                                _currentAddress ?? snapshot.data.lastName,
-                                // userType cannot be changed
-                                userData.userType
-                            );
-                            Navigator.pop(context);
-                          }
-                        }),
-                  ],
-                ),
-              );
+                    ))
+              ]));
             } else {
               print('ovde greska');
               return Loading();

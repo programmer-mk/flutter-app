@@ -6,10 +6,12 @@ class ProductDetail extends StatefulWidget {
   String productName = '';
   int productPrice = 0;
   String productDescription = '';
+  String productUsage = '';
   String imageUrl = '';
   String uid = '';
 
-  ProductDetail(this.uid, this.productName, this.productPrice, this.productDescription, this.imageUrl);
+  ProductDetail(this.uid, this.productName, this.productPrice,
+      this.productDescription, this.productUsage, this.imageUrl);
 
   @override
   _ProductDetailState createState() => _ProductDetailState();
@@ -56,9 +58,7 @@ class _ProductDetailState extends State<ProductDetail> {
                               color: Colors.red,
                             ))),
                     SizedBox(height: 25.0),
-                    Container(
-                        child:
-                            Image.network(widget.imageUrl)),
+                    Container(child: Image.network(widget.imageUrl)),
                     SizedBox(height: 45.0),
                     Container(
                         child: Row(
@@ -101,6 +101,37 @@ class _ProductDetailState extends State<ProductDetail> {
                           child: Expanded(
                             child: Text(
                               '${widget.productDescription}', maxLines: 4,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14.0,
+                                color: Colors.red,
+                              ),
+                              //overflow: TextOverflow.ellipsis,
+                              //textAlign: TextAlign.justify,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )),
+                    SizedBox(height: 30.0),
+                    Container(
+                        child: Row(
+                      children: [
+                        Container(
+                            child: Text('Nacin koriscenja : ',
+                                maxLines: 4,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 22.0,
+                                  color: Colors.black26,
+                                ))),
+                        SizedBox(
+                          width: 15.0,
+                        ),
+                        Container(
+                          child: Expanded(
+                            child: Text(
+                              '${widget.productUsage}', maxLines: 4,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14.0,
@@ -171,7 +202,7 @@ class _ProductDetailState extends State<ProductDetail> {
                         Container(
                           child: Expanded(
                             child: Text(
-                              '${widget.productPrice * currentProductAmount}',
+                              '${widget.productPrice * currentProductAmount} din',
                               maxLines: 4,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -194,12 +225,17 @@ class _ProductDetailState extends State<ProductDetail> {
                           /*
                            save product to bucket
                           */
-                          DatabaseService(uid: widget.uid).addProductToBucket(widget.productName, widget.productPrice,
-                              widget.productDescription, '', widget.imageUrl, currentProductAmount);
+                          DatabaseService(uid: widget.uid).addProductToBucket(
+                              widget.productName,
+                              widget.productPrice,
+                              widget.productDescription,
+                              '',
+                              widget.imageUrl,
+                              currentProductAmount);
                           Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Bucket())
-                           );
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Bucket()));
                         },
                         style: ElevatedButton.styleFrom(
                           primary: Colors.red,
