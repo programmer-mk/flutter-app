@@ -2,11 +2,16 @@ import 'dart:collection';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_app/models/order.dart';
 import 'package:flutter_app/models/product.dart';
 import 'package:flutter_app/models/user.dart';
+import 'package:image_picker_web/image_picker_web.dart';
 import 'package:uuid/uuid.dart';
+
+import 'package:mime_type/mime_type.dart';
+import 'package:path/path.dart' as path;
 
 class DatabaseService {
 
@@ -66,27 +71,33 @@ class DatabaseService {
     );
   }
 
-  Future<String> uploadFile(File _image, String imageName) async {
-    StorageReference storageReference = FirebaseStorage.instance.ref().child('images/${imageName}');
-    StorageUploadTask uploadTask = storageReference.putFile(_image);
-    await uploadTask.onComplete;
-    print('File Uploaded');
-    String returnURL;
-    await storageReference.getDownloadURL().then((fileURL) {
-      returnURL =  fileURL;
-    });
-    return returnURL;
+  Future<Uri> uploadFile(MediaInfo mediaInfo, String imageName) async {
+    String mimeType = mime(path.basename(mediaInfo.fileName));
+    final extension = extensionFromMime(mimeType);
+    var metadata = fb.UploadMetadata(
+      contentType: mimeType,
+    );
+
+    fb.StorageReference ref = fb
+        .app()
+        .storage()
+        .refFromURL('gs://programming-user-interfaces.appspot.com')
+        .child(
+        "images/$imageName");
+    fb.UploadTask uploadTask = ref.put(mediaInfo.data, metadata);
+    fb.UploadTaskSnapshot taskSnapshot = await uploadTask.future;
+    return taskSnapshot.ref.getDownloadURL();
   }
 
-  Future<String> saveImages(File _image, String imageName, DocumentReference ref) async {
-      String imageURL = await uploadFile(_image, imageName);
-      return imageURL;
+  Future<String> saveImages(MediaInfo mediaInfo, String imageName, DocumentReference ref) async {
+      Uri imageURI = await uploadFile(mediaInfo, imageName);
+      return imageURI.toString();
       //ref.updateData({"image": FieldValue.arrayUnion([imageURL])});
   }
 
-  Future<dynamic> updateProduct(String name, int price, String description, String usage, File _image) async {
+  Future<dynamic> updateProduct(String name, int price, String description, String usage, MediaInfo mediaInfo) async {
 
-    String imageUrl = await saveImages(_image, name, images);
+    String imageUrl = await saveImages(mediaInfo, name, images);
     return await productCollection.document(Uuid().v1()).setData({
       'name': name,
       'price': price,

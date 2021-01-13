@@ -6,7 +6,7 @@ import 'package:flutter_app/services/database.dart';
 import 'package:flutter_app/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/shared/popup.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:image_picker_web/image_picker_web.dart';
 import 'package:provider/provider.dart';
 
 class AddProduct extends StatefulWidget {
@@ -26,15 +26,18 @@ class _AddProductState extends State<AddProduct> {
   String description ='';
   String usage = '';
 
-  File _image;
-  final picker = ImagePicker();
+  Image _image;
+  MediaInfo _mediaInfo;
 
   Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
 
+    //Image pickedFile = await ImagePickerWeb.getImage(outputType: ImageType.widget);
+    MediaInfo mediaInfo = await ImagePickerWeb.getImageInfo;
+    Image pickedFile = Image.memory(mediaInfo.data);
     setState(() {
       if (pickedFile != null) {
-        _image = File(pickedFile.path);
+        _image = pickedFile;
+        _mediaInfo = mediaInfo;
       } else {
         print('No image selected.');
       }
@@ -158,7 +161,7 @@ class _AddProductState extends State<AddProduct> {
                         child:Center(
                           child: _image == null
                               ? Text('Slika nije selektovana.')
-                              : Image.file(_image),
+                              : _image,
                         ),
                       ),
                       SizedBox(height: 20.0),
@@ -179,7 +182,7 @@ class _AddProductState extends State<AddProduct> {
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
                               setState(() => loading = true);
-                              await DatabaseService(uid: user.uid).updateProduct(name, price, description, usage, _image);
+                              await DatabaseService(uid: user.uid).updateProduct(name, price, description, usage, _mediaInfo);
                               Navigator.pop(context);
                               // if (result == null) {
                               //   setState(() {
