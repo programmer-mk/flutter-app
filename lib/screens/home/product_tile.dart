@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user.dart';
 import 'package:flutter_app/screens/home/product_detail.dart';
 import 'package:flutter_app/services/database.dart';
+import 'package:flutter_app/services/toast_service.dart';
 import 'package:provider/provider.dart';
 
 class ProductTile extends StatelessWidget {
@@ -60,7 +61,8 @@ class ProductTile extends StatelessWidget {
                   height: 32.0,
                   child: RaisedButton(
                     onPressed: () {
-                      DatabaseService(uid: user.uid).deleteBucketProducts(product.name, product.price);
+                      DatabaseService(uid: user.uid).deleteBucketProducts(product.name, product.price)
+                          .then((v) =>  ToastService.showMessage("Proizvod je uspesno obrisan"));;
                     },
                     child: Text("Obrisi", style: TextStyle(color: Colors.white)),
                   ),
