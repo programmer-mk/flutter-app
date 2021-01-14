@@ -228,4 +228,10 @@ class DatabaseService {
     return userCollection.document(uid).snapshots()
         .map(_userDataFromSnapshot);
   }
+
+  // get user doc stream
+  Future<UserData> getUser() {
+    return userCollection.document(uid).snapshots()
+        .map(_userDataFromSnapshot).first;
+  }
 }

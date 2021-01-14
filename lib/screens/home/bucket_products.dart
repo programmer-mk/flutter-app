@@ -3,6 +3,7 @@ import 'package:flutter_app/models/product.dart';
 import 'package:flutter_app/models/user.dart';
 import 'package:flutter_app/screens/home/product_tile.dart';
 import 'package:flutter_app/services/database.dart';
+import 'package:flutter_app/services/toast_service.dart';
 import 'package:provider/provider.dart';
 
 class BucketProductList extends StatefulWidget {
@@ -96,7 +97,8 @@ class _BucketProductListState extends State<BucketProductList> {
                 color: Colors.red,
                 onPressed: products.isEmpty  ? null : ()  {
                   DatabaseService(uid: widget.user.uid).updateOrder(products)
-                      .then((value) => DatabaseService(uid: widget.user.uid).deleteBucket());
+                      .then((value) => DatabaseService(uid: widget.user.uid).deleteBucket())
+                      .then((v) =>  ToastService.showMessage("Porudzbina je uspesno poslata"));
                   //Navigator.pop(context);
                 },
                 child: Text(

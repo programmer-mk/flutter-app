@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/user.dart';
 import 'package:flutter_app/screens/home/bucket.dart';
 import 'package:flutter_app/services/database.dart';
+import 'package:flutter_app/services/toast_service.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 class ProductDetail extends StatefulWidget {
   String productName = '';
@@ -21,8 +25,16 @@ class _ProductDetailState extends State<ProductDetail> {
   int currentProductAmount = 1;
   List<int> productAmounts = <int>[1, 2, 3, 4, 5, 6, 7, 8];
 
+  Future<UserData> getUserType(User user) async {
+    UserData u = await DatabaseService(uid: user.uid).getUser();
+    return u;
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    final user = Provider.of<User>(context);
+
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -42,214 +54,235 @@ class _ProductDetailState extends State<ProductDetail> {
             ),
           ],
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+        body: FutureBuilder(
+          future: getUserType(user),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              UserData userData = snapshot.data;
+              debugPrint('build widget: ${snapshot.data}');
+              // Build the widget with data.
+              return SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    SizedBox(height: 50.0),
                     Container(
-                        child: Text(widget.productName,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 22.0,
-                              color: Colors.red,
-                            ))),
-                    SizedBox(height: 25.0),
-                    Container(child: Image.network(widget.imageUrl)),
-                    SizedBox(height: 45.0),
-                    Container(
-                        child: Row(
-                      children: [
-                        Container(
-                            child: Text('Cena po jedinici : ',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 22.0,
-                                  color: Colors.black26,
-                                ))),
-                        SizedBox(
-                          width: 15.0,
-                        ),
-                        Container(
-                            child: Text('${widget.productPrice} din',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 22.0,
-                                  color: Colors.red,
-                                )))
-                      ],
-                    )),
-                    SizedBox(height: 30.0),
-                    Container(
-                        child: Row(
-                      children: [
-                        Container(
-                            child: Text('Opis : ',
-                                maxLines: 4,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 22.0,
-                                  color: Colors.black26,
-                                ))),
-                        SizedBox(
-                          width: 15.0,
-                        ),
-                        Container(
-                          child: Expanded(
-                            child: Text(
-                              '${widget.productDescription}', maxLines: 4,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14.0,
-                                color: Colors.red,
+                      padding: EdgeInsets.symmetric(
+                          vertical: 20.0, horizontal: 50.0),
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(height: 50.0),
+                          Container(
+                              child: Text(widget.productName,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 22.0,
+                                    color: Colors.red,
+                                  ))),
+                          SizedBox(height: 25.0),
+                          Container(child: Image.network(widget.imageUrl)),
+                          SizedBox(height: 45.0),
+                          Container(
+                              child: Row(
+                                children: [
+                                  Container(
+                                      child: Text('Cena po jedinici : ',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 22.0,
+                                            color: Colors.black26,
+                                          ))),
+                                  SizedBox(
+                                    width: 15.0,
+                                  ),
+                                  Container(
+                                      child: Text('${widget.productPrice} din',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 22.0,
+                                            color: Colors.red,
+                                          )))
+                                ],
+                              )),
+                          SizedBox(height: 30.0),
+                          Container(
+                              child: Row(
+                                children: [
+                                  Container(
+                                      child: Text('Opis : ',
+                                          maxLines: 4,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 22.0,
+                                            color: Colors.black26,
+                                          ))),
+                                  SizedBox(
+                                    width: 15.0,
+                                  ),
+                                  Container(
+                                    child: Expanded(
+                                      child: Text(
+                                        '${widget.productDescription}',
+                                        maxLines: 4,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14.0,
+                                          color: Colors.red,
+                                        ),
+                                        //overflow: TextOverflow.ellipsis,
+                                        //textAlign: TextAlign.justify,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )),
+                          SizedBox(height: 30.0),
+                          Container(
+                              child: Row(
+                                children: [
+                                  Container(
+                                      child: Text('Nacin koriscenja : ',
+                                          maxLines: 4,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 22.0,
+                                            color: Colors.black26,
+                                          ))),
+                                  SizedBox(
+                                    width: 15.0,
+                                  ),
+                                  Container(
+                                    child: Expanded(
+                                      child: Text(
+                                        '${widget.productUsage}', maxLines: 4,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14.0,
+                                          color: Colors.red,
+                                        ),
+                                        //overflow: TextOverflow.ellipsis,
+                                        //textAlign: TextAlign.justify,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )),
+                          SizedBox(height: 30.0),
+                          Container(
+                            child: Row(children: [
+                              Container(
+                                  child: Text('Kolicina : ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 22.0,
+                                        color: Colors.black26,
+                                      ))),
+                              SizedBox(
+                                width: 15.0,
                               ),
-                              //overflow: TextOverflow.ellipsis,
-                              //textAlign: TextAlign.justify,
-                            ),
+                              Container(
+                                  child: DropdownButton<int>(
+                                    value: currentProductAmount,
+                                    iconSize: 24,
+                                    elevation: 16,
+                                    style: TextStyle(color: Colors.red),
+                                    underline: Container(
+                                      height: 2,
+                                      color: Colors.red,
+                                    ),
+                                    onChanged: (int newValue) {
+                                      setState(() {
+                                        currentProductAmount = newValue;
+                                      });
+                                    },
+                                    items: productAmounts
+                                        .map<DropdownMenuItem<int>>((
+                                        int value) {
+                                      return DropdownMenuItem<int>(
+                                        value: value,
+                                        child: Text('${value}'),
+                                      );
+                                    }).toList(),
+                                  )),
+                            ]),
                           ),
-                        ),
-                      ],
-                    )),
-                    SizedBox(height: 30.0),
-                    Container(
-                        child: Row(
-                      children: [
-                        Container(
-                            child: Text('Nacin koriscenja : ',
-                                maxLines: 4,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 22.0,
-                                  color: Colors.black26,
-                                ))),
-                        SizedBox(
-                          width: 15.0,
-                        ),
-                        Container(
-                          child: Expanded(
-                            child: Text(
-                              '${widget.productUsage}', maxLines: 4,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14.0,
-                                color: Colors.red,
-                              ),
-                              //overflow: TextOverflow.ellipsis,
-                              //textAlign: TextAlign.justify,
-                            ),
+                          SizedBox(
+                            height: 30.0,
                           ),
-                        ),
-                      ],
-                    )),
-                    SizedBox(height: 30.0),
-                    Container(
-                      child: Row(children: [
-                        Container(
-                            child: Text('Kolicina : ',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 22.0,
-                                  color: Colors.black26,
-                                ))),
-                        SizedBox(
-                          width: 15.0,
-                        ),
-                        Container(
-                            child: DropdownButton<int>(
-                          value: currentProductAmount,
-                          iconSize: 24,
-                          elevation: 16,
-                          style: TextStyle(color: Colors.red),
-                          underline: Container(
-                            height: 2,
-                            color: Colors.red,
+                          Container(
+                              child: Row(
+                                children: [
+                                  Container(
+                                      child: Text('Ukupna cena : ',
+                                          maxLines: 4,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 22.0,
+                                            color: Colors.black26,
+                                          ))),
+                                  SizedBox(
+                                    width: 15.0,
+                                  ),
+                                  Container(
+                                    child: Expanded(
+                                      child: Text(
+                                        '${widget.productPrice *
+                                            currentProductAmount} din',
+                                        maxLines: 4,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14.0,
+                                          color: Colors.red,
+                                        ),
+                                        //overflow: TextOverflow.ellipsis,
+                                        //textAlign: TextAlign.justify,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )),
+                          SizedBox(
+                            height: 20.0,
                           ),
-                          onChanged: (int newValue) {
-                            setState(() {
-                              currentProductAmount = newValue;
-                            });
-                          },
-                          items: productAmounts
-                              .map<DropdownMenuItem<int>>((int value) {
-                            return DropdownMenuItem<int>(
-                              value: value,
-                              child: Text('${value}'),
-                            );
-                          }).toList(),
-                        )),
-                      ]),
-                    ),
-                    SizedBox(
-                      height: 30.0,
-                    ),
-                    Container(
-                        child: Row(
-                      children: [
-                        Container(
-                            child: Text('Ukupna cena : ',
-                                maxLines: 4,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 22.0,
-                                  color: Colors.black26,
-                                ))),
-                        SizedBox(
-                          width: 15.0,
-                        ),
-                        Container(
-                          child: Expanded(
-                            child: Text(
-                              '${widget.productPrice * currentProductAmount} din',
-                              maxLines: 4,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14.0,
-                                color: Colors.red,
-                              ),
-                              //overflow: TextOverflow.ellipsis,
-                              //textAlign: TextAlign.justify,
-                            ),
-                          ),
-                        ),
-                      ],
-                    )),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    Container(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          /*
+                          userData.userType == 0 ? Container(
+                            child: ElevatedButton(
+                              onPressed: () {
+                                /*
                            save product to bucket
                           */
-                          DatabaseService(uid: widget.uid).addProductToBucket(
-                              widget.productName,
-                              widget.productPrice,
-                              widget.productDescription,
-                              '',
-                              widget.imageUrl,
-                              currentProductAmount);
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Bucket()));
-                        },
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.red,
-                        ),
-                        child: Text(
-                          "Dodaj u korpu",
-                        ),
+                                DatabaseService(uid: widget.uid)
+                                    .addProductToBucket(
+                                    widget.productName,
+                                    widget.productPrice,
+                                    widget.productDescription,
+                                    '',
+                                    widget.imageUrl,
+                                    currentProductAmount)
+                                    .then((v) => ToastService.showMessage(
+                                    "Proizvod uspesno dodat u korpu"));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Bucket()));
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.red,
+                              ),
+                              child: Text(
+                                "Dodaj u korpu",
+                              ),
+                            ),
+                          ) : SizedBox(),
+                        ],
                       ),
                     ),
                   ],
                 ),
-              ),
-            ],
-          ),
+              );
+            } else {
+              // We can show the loading view until the data comes back.
+              debugPrint('waiting user data...');
+              return CircularProgressIndicator();
+            }
+          },
         ));
   }
 }

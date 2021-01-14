@@ -2,6 +2,7 @@ import 'package:flutter_app/models/user.dart';
 import 'package:flutter_app/services/auth.dart';
 import 'package:flutter_app/services/database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/services/toast_service.dart';
 import 'package:flutter_app/shared/loading.dart';
 import 'package:provider/provider.dart';
 
@@ -237,8 +238,9 @@ class _ChangeProfileInfoState extends State<ChangeProfileInfo> {
                                           _currentAddress ??
                                               snapshot.data.address,
                                           // userType cannot be changed
-                                          userData.userType);
-                                  Navigator.pop(context);
+                                          userData.userType).then((v) =>  ToastService.showMessage("Profil uspesno promenjen"))
+                                  .then((v) => Navigator.pop(context));
+
                                 }
                               }),
                         ],

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter_app/models/user.dart';
 import 'package:flutter_app/services/auth.dart';
 import 'package:flutter_app/services/database.dart';
+import 'package:flutter_app/services/toast_service.dart';
 import 'package:flutter_app/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/shared/popup.dart';
@@ -83,7 +84,7 @@ class _AddProductState extends State<AddProduct> {
                     children: <Widget>[
                       SizedBox(height: 20.0),
                       Container(
-                          child: Text('Prijava',
+                          child: Text('Dodaj proizvod',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 22.0,
@@ -182,7 +183,8 @@ class _AddProductState extends State<AddProduct> {
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
                               setState(() => loading = true);
-                              await DatabaseService(uid: user.uid).updateProduct(name, price, description, usage, _mediaInfo);
+                              await DatabaseService(uid: user.uid).updateProduct(name, price, description, usage, _mediaInfo)
+                                  .then((v) =>  ToastService.showMessage("Proizvod je uspesno dodat"));
                               Navigator.pop(context);
                               // if (result == null) {
                               //   setState(() {
