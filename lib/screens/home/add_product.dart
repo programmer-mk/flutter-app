@@ -159,6 +159,8 @@ class _AddProductState extends State<AddProduct> {
                       ),
                       SizedBox(height: 30.0),
                       Container(
+                        width: 500.0,
+                        height: 500.0,
                         child:Center(
                           child: _image == null
                               ? Text('Slika nije selektovana.')

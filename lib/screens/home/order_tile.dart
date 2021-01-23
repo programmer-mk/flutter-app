@@ -107,7 +107,7 @@ class OrderTile extends StatelessWidget {
                             ),
 
                           ),
-                          SizedBox(height:12.0),
+                          SizedBox(height:8.0),
                          Container(
                            height: 20.0,
                            child:ButtonTheme(

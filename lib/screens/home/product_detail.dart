@@ -63,11 +63,15 @@ class _ProductDetailState extends State<ProductDetail> {
               // Build the widget with data.
               return SingleChildScrollView(
                 child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Container(
                       padding: EdgeInsets.symmetric(
                           vertical: 20.0, horizontal: 50.0),
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           SizedBox(height: 50.0),
                           Container(
@@ -78,10 +82,12 @@ class _ProductDetailState extends State<ProductDetail> {
                                     color: Colors.red,
                                   ))),
                           SizedBox(height: 25.0),
-                          Container(child: Image.network(widget.imageUrl)),
+                          Container(child: Image.network(widget.imageUrl), height: 500.0, width: 500.0,),
                           SizedBox(height: 45.0),
                           Container(
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Container(
                                       child: Text('Cena po jedinici : ',
@@ -105,6 +111,8 @@ class _ProductDetailState extends State<ProductDetail> {
                           SizedBox(height: 30.0),
                           Container(
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Container(
                                       child: Text('Opis : ',
@@ -118,7 +126,6 @@ class _ProductDetailState extends State<ProductDetail> {
                                     width: 15.0,
                                   ),
                                   Container(
-                                    child: Expanded(
                                       child: Text(
                                         '${widget.productDescription}',
                                         maxLines: 4,
@@ -131,12 +138,13 @@ class _ProductDetailState extends State<ProductDetail> {
                                         //textAlign: TextAlign.justify,
                                       ),
                                     ),
-                                  ),
                                 ],
                               )),
                           SizedBox(height: 30.0),
                           Container(
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Container(
                                       child: Text('Nacin koriscenja : ',
@@ -150,8 +158,7 @@ class _ProductDetailState extends State<ProductDetail> {
                                     width: 15.0,
                                   ),
                                   Container(
-                                    child: Expanded(
-                                      child: Text(
+                                    child:  Text(
                                         '${widget.productUsage}', maxLines: 4,
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
@@ -162,12 +169,15 @@ class _ProductDetailState extends State<ProductDetail> {
                                         //textAlign: TextAlign.justify,
                                       ),
                                     ),
-                                  ),
+
                                 ],
                               )),
                           SizedBox(height: 30.0),
                           Container(
-                            child: Row(children: [
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
                               Container(
                                   child: Text('Kolicina : ',
                                       style: TextStyle(
@@ -209,6 +219,8 @@ class _ProductDetailState extends State<ProductDetail> {
                           ),
                           Container(
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Container(
                                       child: Text('Ukupna cena : ',
@@ -222,7 +234,6 @@ class _ProductDetailState extends State<ProductDetail> {
                                     width: 15.0,
                                   ),
                                   Container(
-                                    child: Expanded(
                                       child: Text(
                                         '${widget.productPrice *
                                             currentProductAmount} din',
@@ -236,7 +247,6 @@ class _ProductDetailState extends State<ProductDetail> {
                                         //textAlign: TextAlign.justify,
                                       ),
                                     ),
-                                  ),
                                 ],
                               )),
                           SizedBox(
