@@ -103,7 +103,7 @@ class _SignInState extends State<SignIn> {
                   onPressed: () async {
                     if(_formKey.currentState.validate()){
                       setState(() => loading = true);
-                      dynamic result = await _auth.signInWithEmailAndPassword(email, password);
+                      dynamic result = await _auth.signInWithEmailAndPassword(email, password).then((x) =>Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false));
                       if(result == null) {
                         setState(() {
                           loading = false;
