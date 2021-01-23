@@ -208,7 +208,7 @@ class _RegisterState extends State<Register> {
                               setState(() => loading = true);
                               dynamic result =
                                   await _auth.registerWithEmailAndPassword(
-                                      email, password, firstName, lastName, phone, address, _radioValue);
+                                      email, password, firstName, lastName, phone, address, _radioValue).then((x) =>  Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false));
                               if (result == null) {
                                 setState(() {
                                   loading = false;
