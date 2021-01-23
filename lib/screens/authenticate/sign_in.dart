@@ -78,7 +78,7 @@ class _SignInState extends State<SignIn> {
               SizedBox(height: 20.0),
               TextFormField(
                 decoration: new InputDecoration(
-                  labelText: "Password",
+                  labelText: "Sifra",
                   fillColor: Colors.white,
                   border: new OutlineInputBorder(
                     borderRadius: new BorderRadius.circular(10.0),

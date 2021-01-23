@@ -69,8 +69,37 @@ class OrderTile extends StatelessWidget {
 
                               child: RaisedButton(
                                 onPressed: () {
-                                  DatabaseService(uid: user.uid)
-                                      .deleteOrder(order.id);
+
+                                  // set up the buttons
+                                  Widget cancelButton = FlatButton(
+                                    child: Text("Ponisti"),
+                                    onPressed:  () {
+                                      Navigator.pop(context);
+                                    },
+                                  );
+                                  Widget continueButton = FlatButton(
+                                    child: Text("Potvrdi"),
+                                    onPressed:  () {
+                                      DatabaseService(uid: user.uid).deleteOrder(order.id);
+                                      Navigator.pop(context);
+                                    },
+                                  );
+
+                                  AlertDialog alert = AlertDialog(
+                                    title: Text("Brisanje porudzbine"),
+                                    content: Text("Da li ste sigurni da zelite da obrisete porudzbinu korisnika ${order.buyerName} ?"),
+                                    actions: [
+                                      cancelButton,
+                                      continueButton,
+                                    ],
+                                  );
+                                  // show the dialog
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return alert;
+                                    },
+                                  );
                                 },
                                 child: Text("Obrisi",
                                     style: TextStyle(color: Colors.white)),
@@ -87,7 +116,36 @@ class OrderTile extends StatelessWidget {
 
                              child: RaisedButton(
                                onPressed: () {
-                                 DatabaseService(uid: user.uid).proceedOrder(order.id);
+                                 // set up the buttons
+                                 Widget cancelButton = FlatButton(
+                                   child: Text("Ponisti"),
+                                   onPressed:  () {
+                                    Navigator.pop(context);
+                                   },
+                                 );
+                                 Widget continueButton = FlatButton(
+                                   child: Text("Obradi"),
+                                   onPressed:  () {
+                                     DatabaseService(uid: user.uid).proceedOrder(order.id);
+                                     Navigator.pop(context);
+                                   },
+                                 );
+
+                                 AlertDialog alert = AlertDialog(
+                                   title: Text("Obrada porudzbine"),
+                                   content: Text("Da li ste sigurni da zelite da obradite porudzbinu korisnika ${order.buyerName} ?"),
+                                   actions: [
+                                     cancelButton,
+                                     continueButton,
+                                   ],
+                                 );
+                                 // show the dialog
+                                 showDialog(
+                                   context: context,
+                                   builder: (BuildContext context) {
+                                     return alert;
+                                   },
+                                 );
                                },
                                child: Text("Obradi",
                                    style: TextStyle(color: Colors.white)),
