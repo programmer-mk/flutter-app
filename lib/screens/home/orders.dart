@@ -23,7 +23,12 @@ class Orders extends StatelessWidget {
         child: Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
-            title: Text('Medenjaci'),
+            title: Text(
+                'Medenjaci',
+                style: TextStyle(
+                    fontSize: 14.0
+                )
+            ),
             backgroundColor: Colors.red[600],
             elevation: 0.0,
             actions: <Widget>[
@@ -31,6 +36,7 @@ class Orders extends StatelessWidget {
                 icon: Icon(
                   Icons.person,
                   color: Colors.white,
+                    size: 14.0
                 ),
                 label: Text(
                   'izloguj se',
@@ -39,11 +45,13 @@ class Orders extends StatelessWidget {
                 onPressed: () async {
                   await _auth.signOut();
                 },
+
               ),
               FlatButton.icon(
                 icon: Icon(
                   Icons.settings,
                   color: Colors.white,
+                    size: 15.0
                 ),
                 label: Text('izmeni profil',
                     style: TextStyle(
